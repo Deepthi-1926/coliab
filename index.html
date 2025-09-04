@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WDBDashboard</title>
+  <style>
+    /* ----- CSS Styling ----- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+      background-color: #f4f6f9;
+      color: #333;
+    }
+
+    .sidebar {
+      width: 220px;
+      background-color: #1e293b;
+      color: white;
+      padding: 20px;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .sidebar h2 {
+      margin-bottom: 1rem;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    .sidebar ul {
+      list-style: none;
+    }
+
+    .sidebar ul li {
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      margin: 5px 0;
+    }
+
+    .sidebar ul li:hover {
+      background-color: #334155;
+    }
+
+    .main {
+      flex-grow: 1;
+      padding: 20px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .toggle-btn {
+      background-color: #1e293b;
+      color: white;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      display: none;
+    }
+
+    .card {
+      background-color: white;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        position: fixed;
+        height: 100%;
+        transform: translateX(-100%);
+        z-index: 100;
+      }
+
+      .sidebar.active {
+        transform: translateX(0);
+      }
+
+      .toggle-btn {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <h2>WDBDashboard</h2>
+    <ul>
+      <li onclick="showSection('dashboard')">Dashboard</li>
+      <li onclick="showSection('stats')">Statistics</li>
+      <li onclick="showSection('users')">Users</li>
+      <li onclick="showSection('settings')">Settings</li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <div class="header">
+      <button class="toggle-btn" onclick="toggleSidebar()">☰ Menu</button>
+      <h1 id="page-title">Dashboard</h1>
+    </div>
+
+    <div class="card" id="dashboard">
+      <h2>Welcome to WDBDashboard</h2>
+      <p>This is your central hub for monitoring and managing web data. Navigate using the sidebar to explore stats, users, and more.</p>
+    </div>
+
+    <div class="card" id="stats" style="display: none;">
+      <h2>Statistics Overview</h2>
+      <p>Here you could display graphs, metrics, and KPIs using chart libraries like Chart.js or D3.js.</p>
+    </div>
+
+    <div class="card" id="users" style="display: none;">
+      <h2>User Management</h2>
+      <p>Manage users, permissions, and roles here. You can integrate with a database or API.</p>
+    </div>
+
+    <div class="card" id="settings" style="display: none;">
+      <h2>Settings</h2>
+      <p>Configure your dashboard preferences and system settings.</p>
+    </div>
+  </div>
+
+  <script>
+    // ----- JavaScript Interactivity -----
+    const sidebar = document.getElementById('sidebar');
+    const sections = ['dashboard', 'stats', 'users', 'settings'];
+    const pageTitle = document.getElementById('page-title');
+
+    function toggleSidebar() {
+      sidebar.classList.toggle('active');
+    }
+
+    function showSection(id) {
+      sections.forEach(sec => {
+        document.getElementById(sec).style.display = (sec === id) ? 'block' : 'none';
+      });
+      pageTitle.textContent = id.charAt(0).toUpperCase() + id.slice(1);
+      if (window.innerWidth <= 768) toggleSidebar();
+    }
+  </script>
+</body>
+</html>
